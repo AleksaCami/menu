@@ -16,6 +16,11 @@ const routes = [
     path: "/currencies/add",
     name: "CurrenciesAdding",
     component: AddCurrency
+  },
+  {
+    path: "/currencies/edit/:id",
+    name: "CurrenciesEditing",
+    component: AddCurrency
   }
 ];
 

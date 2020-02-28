@@ -70,4 +70,8 @@ export default {
   background-color: #ff6600;
   border-color: #ff6600;
 }
+.btn-primary:hover {
+  background-color: #e05a01;
+  border-color: #e05a01;
+}
 </style>
