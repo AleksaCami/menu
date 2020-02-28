@@ -6,12 +6,12 @@ import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faSearch, faEuroSign } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faEuroSign, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 Vue.config.productionTip = false;
 
-library.add(faSearch, faEuroSign);
+library.add(faSearch, faEuroSign, faPlusCircle);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 

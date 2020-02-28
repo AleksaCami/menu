@@ -2,12 +2,14 @@
   <div class="d-flex" id="wrapper">
     <div class="bg-light border-right" id="sidebar-wrapper">
       <div class="nav-color-left sidebar-heading">
-        <img
-          class="logo"
-          src="../../assets/images/menulogo500x500px-01.png"
-          alt="menu logo"
-          height="70"
-        />
+        <a href="/">
+          <img
+            class="logo pointer"
+            src="../../assets/images/menulogo500x500px-01.png"
+            alt="menu logo"
+            height="70"
+          />
+        </a>
       </div>
       <CurrenciesList />
     </div>
@@ -30,7 +32,7 @@ $accent: #ff6600;
 
 #sidebar-wrapper {
   min-height: 100vh;
-  width: 300px;
+  width: 400px;
   margin-left: -15rem;
   -webkit-transition: margin 0.25s ease-out;
   -moz-transition: margin 0.25s ease-out;

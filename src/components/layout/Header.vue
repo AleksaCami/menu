@@ -20,7 +20,7 @@ $accent: #ff6600;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  min-width: calc(1200px - 300px);
+  min-width: calc(1200px - 400px);
   width: 100%;
 }
 .nav-content {

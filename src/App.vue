@@ -54,4 +54,7 @@ html {
   position: relative;
   min-height: 100%;
 }
+.pointer {
+  cursor: pointer;
+}
 </style>
