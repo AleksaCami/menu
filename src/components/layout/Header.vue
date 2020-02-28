@@ -1,5 +1,5 @@
 <template>
-  <div class="nav-color nav">
+  <div class="nav-color nav w-100">
     <div class="col-8 nav-content">
       <i class="fa fa-eur" aria-hidden="true" />
       <font-awesome-icon icon="euro-sign" style="color: white" />

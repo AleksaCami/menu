@@ -9,9 +9,20 @@
           height="70"
         />
       </div>
+      <CurrenciesList />
     </div>
   </div>
 </template>
+
+<script>
+import CurrenciesList from "../CurrenciesList";
+
+export default {
+  components: {
+    CurrenciesList
+  }
+};
+</script>
 
 <style lang="scss" scoped>
 $white: #fff;

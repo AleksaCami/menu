@@ -2,7 +2,7 @@
   <div id="app">
     <div class="d-flex">
       <Sidebar />
-      <div class="d-flex flex-column">
+      <div class="d-flex flex-column full">
         <Header />
         <div id="page-content-wrapper">
           <router-view />
@@ -45,6 +45,9 @@ html {
       color: #42b983;
     }
   }
+}
+.full {
+  width: calc(100% - 300px);
 }
 .page-container {
   overflow: hidden;
