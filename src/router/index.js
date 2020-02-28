@@ -5,6 +5,7 @@ import Home from "../views/Currencies.vue";
 Vue.use(VueRouter);
 
 const routes = [
+  { path: "/", redirect: { name: "Currencies" } },
   {
     path: "/currencies",
     name: "Currencies",
