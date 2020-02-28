@@ -47,7 +47,11 @@ export default {
       }
     }
   },
-  watch: {},
+  watch: {
+    currency(newVal, oldVal) {
+      console.log("Prop changed: ", newVal, " | was: ", oldVal);
+    }
+  },
   data: () => ({
     currencies: [],
     currenciesValues: [],

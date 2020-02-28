@@ -2,7 +2,7 @@
   <div>
     <div class="container-fluid">
       <div class="d-flex flex-column form-title">
-        <span class="title"> >Add currency</span>
+        <span class="title">Edit currency</span>
         <hr class="title-divider" />
       </div>
       <div class="d-flex flex-column form-spacing">
@@ -22,7 +22,7 @@
       </div>
       <hr />
       <div class="d-flex justify-content-end form-spacing">
-        <button class="btn btn-primary" @click="addCurrency">
+        <button class="btn btn-primary" @click="editCurrency">
           Submit
         </button>
       </div>
@@ -31,8 +31,6 @@
 </template>
 
 <script>
-import _ from "lodash";
-
 export default {
   mounted() {
     this.getCurrencies();
@@ -73,14 +71,14 @@ export default {
         }
       }
     },
-    addCurrency() {
-      this.currencies.push(this.currency);
-      this.currencies.map(element => {
-        if (element.id === null) {
-          element.id = _.uniqueId();
+    editCurrency() {
+      this.currencies.forEach(element => {
+        if (element.id === this.currency.id) {
+          element = this.currency;
+          this.saveCurrencies();
         }
       });
-      this.saveCurrencies();
+      this.$router.push({ name: "Currencies" });
     },
     saveCurrencies() {
       let parsed = JSON.stringify(this.currencies);
