@@ -79,6 +79,7 @@ export default {
         }
       });
       this.$router.push({ name: "Currencies" });
+      window.location.reload();
     },
     saveCurrencies() {
       let parsed = JSON.stringify(this.currencies);

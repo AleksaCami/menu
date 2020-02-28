@@ -8,18 +8,21 @@
         :key="currency.id"
         @mouseover="deleting = true"
         @mouseleave="deleting = false"
-        @click="editCurrency(currency)"
-        class="currency pointer"
-        :class="[deleting ? 'hovering' : '']"
       >
-        <div>
-          {{ currency.iso }}
+        <div
+          class="currency pointer"
+          @click="editCurrency(currency)"
+          :class="[deleting ? 'hovering' : '']"
+        >
+          <div>
+            {{ currency.iso }}
+          </div>
+          <div class="pointer" v-if="deleting" @click="removeCurrency(index)">
+            Delete
+          </div>
         </div>
-        <div class="pointer" v-if="deleting" @click="removeCurrency(index)">
-          Delete
-        </div>
+        <hr class="currency-divider" />
       </div>
-      <hr class="currency-divider" />
     </div>
     <div class="d-flex flex-column" v-else>
       No currencies added. Try adding some.
@@ -45,11 +48,6 @@ export default {
       } catch (e) {
         localStorage.removeItem("currencies");
       }
-    }
-  },
-  watch: {
-    currency(newVal, oldVal) {
-      console.log("Prop changed: ", newVal, " | was: ", oldVal);
     }
   },
   data: () => ({

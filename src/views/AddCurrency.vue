@@ -2,7 +2,7 @@
   <div>
     <div class="container-fluid">
       <div class="d-flex flex-column form-title">
-        <span class="title"> >Add currency</span>
+        <span class="title">Add currency</span>
         <hr class="title-divider" />
       </div>
       <div class="d-flex flex-column form-spacing">
@@ -90,6 +90,7 @@ export default {
         iso: "",
         symbol: ""
       };
+      window.location.reload();
     }
   }
 };
