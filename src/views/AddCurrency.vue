@@ -2,7 +2,10 @@
   <div>
     <div class="container-fluid">
       <div class="d-flex flex-column form-title">
-        <span class="title">Add currency</span>
+        <span v-if="$route.name === 'CurrenciesAdding'" class="title"
+          >Add currency</span
+        >
+        <span v-else class="title">Edit currency</span>
         <hr class="title-divider" />
       </div>
       <div class="d-flex flex-column form-spacing">
@@ -10,19 +13,26 @@
           <label for="code">
             Currency code
           </label>
-          <input id="code" v-model="currency.iso" maxlength="3" />
+          <input id="code" v-model="currency.iso" maxlength="3" required />
         </div>
         <hr class="form-divider" />
         <div class="input-wrapper">
           <label for="symbol">
             Currency symbol
           </label>
-          <input id="symbol" v-model="currency.symbol" />
+          <input id="symbol" v-model="currency.symbol" required />
         </div>
       </div>
       <hr />
       <div class="d-flex justify-content-end form-spacing">
-        <button class="btn btn-primary">
+        <button
+          v-if="$route.name === 'CurrenciesAdding'"
+          class="btn btn-primary"
+          @click="addCurrency"
+        >
+          Submit
+        </button>
+        <button v-else class="btn btn-primary" @click="editCurrency">
           Submit
         </button>
       </div>
@@ -31,14 +41,75 @@
 </template>
 
 <script>
+import _ from "lodash";
+
 export default {
+  watch: {
+    currencies() {
+      console.log("changed");
+    }
+  },
+  mounted() {
+    this.getCurrencies();
+    if (this.$route.name === "CurrenciesEditing") {
+      this.currency.id = this.$route.params.id;
+      this.getCurrentCurrency();
+    }
+  },
   data: () => ({
     currency: {
       id: null,
       iso: null,
       symbol: null
+    },
+    currencies: []
+  }),
+  methods: {
+    getCurrentCurrency() {
+      if (localStorage.getItem("currencies")) {
+        try {
+          this.currencies = JSON.parse(localStorage.getItem("currencies"));
+          this.currencies.find(element => {
+            if (element.id === this.currency.id) {
+              this.currency = element;
+            }
+          });
+        } catch (e) {
+          localStorage.removeItem("currencies");
+        }
+      }
+    },
+    getCurrencies() {
+      if (localStorage.getItem("currencies")) {
+        try {
+          this.currencies = JSON.parse(localStorage.getItem("currencies"));
+        } catch (e) {
+          localStorage.removeItem("currencies");
+        }
+      }
+    },
+    addCurrency() {
+      this.currencies.push(this.currency);
+      this.currencies.map(element => {
+        if (element.id === null) {
+          element.id = _.uniqueId();
+        }
+      });
+      this.saveCurrencies();
+    },
+    editCurrency() {
+      this.currencies.forEach(element => {
+        if (element.id === this.currency.id) {
+          element = this.currency;
+          this.saveCurrencies();
+        }
+      });
+    },
+    saveCurrencies() {
+      let parsed = JSON.stringify(this.currencies);
+      localStorage.setItem("currencies", parsed);
     }
-  })
+  }
 };
 </script>
 

@@ -4,20 +4,22 @@
     <hr class="title-divider" />
     <div class="d-flex flex-column" v-if="currencies.length">
       <div
-        v-for="currency in currencies"
+        v-for="(currency, index) in currencies"
         :key="currency.id"
         @mouseover="deleting = true"
         @mouseleave="deleting = false"
-        class="currency"
+        @click="editCurrency(currency)"
+        class="currency pointer"
+        :class="[deleting ? 'hovering' : '']"
       >
         <div>
           {{ currency.iso }}
         </div>
-        <div class="pointer" v-if="deleting">
+        <div class="pointer" v-if="deleting" @click="removeCurrency(index)">
           Delete
         </div>
       </div>
-      <hr />
+      <hr class="currency-divider" />
     </div>
     <div class="d-flex flex-column" v-else>
       No currencies added. Try adding some.
@@ -37,16 +39,33 @@
 <script>
 export default {
   mounted() {
-    this.getCurrencies();
+    if (localStorage.getItem("currencies")) {
+      try {
+        this.currencies = JSON.parse(localStorage.getItem("currencies"));
+      } catch (e) {
+        localStorage.removeItem("currencies");
+      }
+    }
   },
+  watch: {},
   data: () => ({
-    currencies: [
-      // { id: 1, iso: "EUR", symbol: "e" }
-    ],
+    currencies: [],
+    currenciesValues: [],
+    storage: [],
     deleting: false
   }),
   methods: {
-    getCurrencies() {}
+    editCurrency(currency) {
+      this.$router.push(`/currencies/edit/${currency.id}`);
+    },
+    removeCurrency(id) {
+      this.currencies.splice(id, 1);
+      this.saveCurrencies();
+    },
+    saveCurrencies() {
+      let parsed = JSON.stringify(this.currencies);
+      localStorage.setItem("currencies", parsed);
+    }
   }
 };
 </script>
@@ -70,9 +89,16 @@ a {
   background: #ff6600;
   width: 100%;
 }
+.hovering {
+  background-color: #e8e8e8;
+}
 .currency {
   display: flex;
   justify-content: space-between;
   font-size: 16px;
+  padding: 10px;
+}
+.currency-divider {
+  width: 100%;
 }
 </style>
