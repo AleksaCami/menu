@@ -53,4 +53,10 @@ html {
 .pointer {
   cursor: pointer;
 }
+.error {
+  justify-content: flex-end;
+  display: flex;
+  font-size: 13px;
+  color: red;
+}
 </style>

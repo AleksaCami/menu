@@ -2,22 +2,45 @@
   <div class="d-flex flex-column list">
     <span class="title">Currency list</span>
     <hr class="title-divider" />
-    <div class="d-flex flex-column" v-if="currencies.length">
-      <div v-for="(currency, index) in currencies" :key="currency.id">
-        <div
-          class="currency pointer"
-          @click="editCurrency(currency)"
-          @mouseover="deleting = true"
-          @mouseleave="deleting = false"
-        >
-          <div>
-            {{ currency.iso }}
+
+    <SearchForm @search="search" @clearSearch="getCurrencies" />
+
+    <div v-if="currencies.length">
+      <div class="d-flex flex-column" v-if="!searching">
+        <div v-for="(currency, index) in currencies" :key="currency.id">
+          <div
+            class="currency pointer"
+            @click="editCurrency(currency)"
+            @mouseover="deleting = true"
+            @mouseleave="deleting = false"
+          >
+            <div>
+              {{ currency.iso }}
+            </div>
+            <div class="pointer" v-if="deleting" @click="removeCurrency(index)">
+              Delete
+            </div>
           </div>
-          <div class="pointer" v-if="deleting" @click="removeCurrency(index)">
-            Delete
-          </div>
+          <hr class="currency-divider" />
         </div>
-        <hr class="currency-divider" />
+      </div>
+      <div v-else>
+        <div v-for="(currency, index) in searchResults" :key="currency.id">
+          <div
+            class="currency pointer"
+            @click="editCurrency(currency)"
+            @mouseover="deleting = true"
+            @mouseleave="deleting = false"
+          >
+            <div>
+              {{ currency.iso }}
+            </div>
+            <div class="pointer" v-if="deleting" @click="removeCurrency(index)">
+              Delete
+            </div>
+          </div>
+          <hr class="currency-divider" />
+        </div>
       </div>
     </div>
     <div class="d-flex flex-column" v-else>
@@ -36,23 +59,35 @@
 </template>
 
 <script>
+import SearchForm from "./SearchForm";
 export default {
+  components: {
+    SearchForm
+  },
   mounted() {
-    if (localStorage.getItem("currencies")) {
-      try {
-        this.currencies = JSON.parse(localStorage.getItem("currencies"));
-      } catch (e) {
-        localStorage.removeItem("currencies");
-      }
-    }
+    this.getCurrencies();
   },
   data: () => ({
     currencies: [],
     currenciesValues: [],
     storage: [],
-    deleting: false
+    deleting: false,
+    searching: false,
+    reformattedSearchString: "",
+    searchResults: []
   }),
   methods: {
+    getCurrencies() {
+      this.searchResults = [];
+      this.searching = false;
+      if (localStorage.getItem("currencies")) {
+        try {
+          this.currencies = JSON.parse(localStorage.getItem("currencies"));
+        } catch (e) {
+          localStorage.removeItem("currencies");
+        }
+      }
+    },
     editCurrency(currency) {
       this.$router.push(`/currencies/edit/${currency.id}`).catch(() => {});
     },
@@ -63,6 +98,15 @@ export default {
     saveCurrencies() {
       let parsed = JSON.stringify(this.currencies);
       localStorage.setItem("currencies", parsed);
+    },
+    search(searchParams) {
+      this.searching = true;
+      this.reformattedSearchString = searchParams.join(" ");
+      this.currencies.filter(element => {
+        if (element.iso === this.reformattedSearchString) {
+          this.searchResults.push(element);
+        }
+      });
     }
   }
 };

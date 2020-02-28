@@ -17,6 +17,7 @@
     "lodash": "^4.17.15",
     "popper.js": "^1.16.1",
     "toastr": "^2.1.4",
+    "v-autocomplete": "^1.8.2",
     "vue": "^2.6.11",
     "vue-router": "^3.1.5"
   },

@@ -12,6 +12,9 @@
           </label>
           <input id="code" v-model="currency.iso" maxlength="3" required />
         </div>
+        <span class="error" v-if="error">
+          {{ error }}
+        </span>
         <hr class="form-divider" />
         <div class="input-wrapper">
           <label for="symbol">
@@ -50,7 +53,8 @@ export default {
       iso: null,
       symbol: null
     },
-    currencies: []
+    currencies: [],
+    error: ""
   }),
   methods: {
     getCurrentCurrency() {
@@ -80,7 +84,17 @@ export default {
       this.currencies.forEach(element => {
         if (element.id === this.currency.id) {
           element = this.currency;
+          this.currency = {
+            id: "",
+            iso: "",
+            symbol: ""
+          };
           this.saveCurrencies();
+        } else if (
+          element.iso === this.currency.iso ||
+          !this.currency.symbol.length
+        ) {
+          this.error = "Already exists.";
         }
       });
       this.$router.push({ name: "Currencies" });
@@ -89,11 +103,6 @@ export default {
     saveCurrencies() {
       let parsed = JSON.stringify(this.currencies);
       localStorage.setItem("currencies", parsed);
-      this.currency = {
-        id: "",
-        iso: "",
-        symbol: ""
-      };
     }
   }
 };

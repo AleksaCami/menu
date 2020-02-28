@@ -12,6 +12,9 @@
           </label>
           <input id="code" v-model="currency.iso" maxlength="3" required />
         </div>
+        <span class="error" v-if="error">
+          {{ error }}
+        </span>
         <hr class="form-divider" />
         <div class="input-wrapper">
           <label for="symbol">
@@ -47,7 +50,8 @@ export default {
       iso: null,
       symbol: null
     },
-    currencies: []
+    currencies: [],
+    error: "",
   }),
   methods: {
     getCurrencies() {
@@ -61,24 +65,27 @@ export default {
     },
     addCurrency() {
       this.currency.id = _.uniqueId();
-      this.currencies.filter(element => {
+      this.currencies.find(element => {
         if (element.id === this.currency.id) {
           this.currency.id = _.uniqueId();
-          this.currencies.push(this.currency);
-        } else if (this.currencies.length === 0) {
-          this.currencies.push(this.currency);
+          this.currency = {
+            id: "",
+            iso: "",
+            symbol: ""
+          };
+        } else if (
+          element.iso === this.currency.iso ||
+          !this.currency.symbol.length
+        ) {
+          this.error = "Already exists.";
         }
       });
+      this.currencies.push(this.currency);
       this.saveCurrencies();
     },
     saveCurrencies() {
       let parsed = JSON.stringify(this.currencies);
       localStorage.setItem("currencies", parsed);
-      this.currency = {
-        id: "",
-        iso: "",
-        symbol: ""
-      };
     }
   }
 };
