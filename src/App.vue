@@ -1,14 +1,23 @@
 <template>
   <div id="app">
-    <Header />
-    <router-view />
+    <div class="d-flex">
+      <Sidebar />
+      <div class="d-flex flex-column">
+        <Header />
+        <div id="page-content-wrapper">
+          <router-view />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import Sidebar from "./components/layout/Sidebar";
 import Header from "./components/layout/Header";
 export default {
   components: {
+    Sidebar,
     Header
   }
 };

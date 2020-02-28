@@ -1,0 +1,7 @@
+<template>
+  <div>
+    <div class="container-fluid">
+      <h1 class="mt-4">Simple Sidebar</h1>
+    </div>
+  </div>
+</template>

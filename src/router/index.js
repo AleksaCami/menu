@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Currencies.vue";
+import Currency from "../views/Currencies.vue";
+import AddCurrency from "../views/AddCurrency";
 
 Vue.use(VueRouter);
 
@@ -9,7 +10,12 @@ const routes = [
   {
     path: "/currencies",
     name: "Currencies",
-    component: Home
+    component: Currency
+  },
+  {
+    path: "/currencies/add",
+    name: "CurrenciesAdding",
+    component: AddCurrency
   }
 ];
 
