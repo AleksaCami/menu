@@ -7,7 +7,8 @@
         <div
           class="currency pointer"
           @click="editCurrency(currency)"
-          @mouseover="deleting = true" @mouseleave="deleting = false"
+          @mouseover="deleting = true"
+          @mouseleave="deleting = false"
         >
           <div>
             {{ currency.iso }}
@@ -53,7 +54,7 @@ export default {
   }),
   methods: {
     editCurrency(currency) {
-      this.$router.push(`/currencies/edit/${currency.id}`);
+      this.$router.push(`/currencies/edit/${currency.id}`).catch(() => {});
     },
     removeCurrency(id) {
       this.currencies.splice(id, 1);

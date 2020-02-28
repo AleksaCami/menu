@@ -23,7 +23,7 @@
       <hr />
       <div class="d-flex justify-content-end form-spacing">
         <button class="btn btn-primary" @click="editCurrency">
-          Submit
+          Save
         </button>
       </div>
     </div>
@@ -34,8 +34,13 @@
 export default {
   mounted() {
     this.getCurrencies();
-    if (this.$route.name === "CurrenciesEditing") {
-      this.currency.id = this.$route.params.id;
+    this.currency.id = this.$route.params.id;
+    this.getCurrentCurrency();
+  },
+  watch: {
+    $route(to) {
+      this.currency.id = to.params.id;
+      this.getCurrencies();
       this.getCurrentCurrency();
     }
   },

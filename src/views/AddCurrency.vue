@@ -23,7 +23,7 @@
       <hr />
       <div class="d-flex justify-content-end form-spacing">
         <button class="btn btn-primary" @click="addCurrency">
-          Submit
+          Save
         </button>
       </div>
     </div>
@@ -79,7 +79,6 @@ export default {
         iso: "",
         symbol: ""
       };
-      window.location.reload();
     }
   }
 };
