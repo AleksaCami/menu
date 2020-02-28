@@ -10,14 +10,14 @@
           <label for="code">
             Currency code
           </label>
-          <input id="code" />
+          <input id="code" v-model="currency.iso" maxlength="3" />
         </div>
         <hr class="form-divider" />
         <div class="input-wrapper">
           <label for="symbol">
             Currency symbol
           </label>
-          <input id="symbol" />
+          <input id="symbol" v-model="currency.symbol" />
         </div>
       </div>
       <hr />
@@ -29,6 +29,18 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  data: () => ({
+    currency: {
+      id: null,
+      iso: null,
+      symbol: null
+    }
+  })
+};
+</script>
 
 <style lang="scss" scoped>
 .title {
