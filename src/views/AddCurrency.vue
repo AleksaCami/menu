@@ -10,7 +10,7 @@
           <label for="code">
             Currency code
           </label>
-          <input id="code" @keyup="error = ''" v-model="currency.iso" maxlength="3" required />
+          <input id="code" @keyup="error = ''" v-model="currency.iso" maxlength="3" />
         </div>
         <span class="error" v-if="error">
           {{ error }}
@@ -20,7 +20,7 @@
           <label for="symbol">
             Currency symbol
           </label>
-          <input id="symbol" v-model="currency.symbol" required />
+          <input id="symbol" v-model="currency.symbol" />
         </div>
       </div>
       <hr />
@@ -53,6 +53,11 @@ export default {
     currencies: [],
     error: ""
   }),
+  computed: {
+    formValid() {
+      return !this.error.length && this.currency.iso && this.currency.symbol;
+    }
+  },
   methods: {
     getCurrencies() {
       if (localStorage.getItem("currencies")) {
@@ -69,7 +74,7 @@ export default {
           this.error = "Already exists";
         }
       });
-      if (!this.error.length) {
+      if (this.formValid) {
         this.currency.id = _.uniqueId();
         this.currencies.find(element => {
           if (element.id === this.currency.id) {

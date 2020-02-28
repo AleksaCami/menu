@@ -10,11 +10,14 @@
           <label for="code">
             Currency code
           </label>
-          <input id="code" @keyup="error = ''" v-model="currency.iso" maxlength="3" required />
+          <input
+            id="code"
+            @keyup="error = ''"
+            v-model="currency.iso"
+            maxlength="3"
+            required
+          />
         </div>
-        <span class="error" v-if="error">
-          {{ error }}
-        </span>
         <hr class="form-divider" />
         <div class="input-wrapper">
           <label for="symbol">
@@ -47,14 +50,18 @@ export default {
       this.getCurrentCurrency();
     }
   },
+  computed: {
+    formValid() {
+      return this.currency.iso && this.currency.symbol;
+    }
+  },
   data: () => ({
     currency: {
       id: null,
       iso: null,
       symbol: null
     },
-    currencies: [],
-    error: ""
+    currencies: []
   }),
   methods: {
     getCurrentCurrency() {
@@ -81,12 +88,7 @@ export default {
       }
     },
     editCurrency() {
-      this.currencies.filter(element => {
-        if (element.iso === this.currency.iso) {
-          this.error = "Already exists";
-        }
-      });
-      if (!this.error.length) {
+      if (this.formValid) {
         this.currencies.forEach(element => {
           if (element.id === this.currency.id) {
             element = this.currency;
