@@ -3,16 +3,11 @@
     <span class="title">Currency list</span>
     <hr class="title-divider" />
     <div class="d-flex flex-column" v-if="currencies.length">
-      <div
-        v-for="(currency, index) in currencies"
-        :key="currency.id"
-        @mouseover="deleting = true"
-        @mouseleave="deleting = false"
-      >
+      <div v-for="(currency, index) in currencies" :key="currency.id">
         <div
           class="currency pointer"
           @click="editCurrency(currency)"
-          :class="[deleting ? 'hovering' : '']"
+          @mouseover="deleting = true" @mouseleave="deleting = false"
         >
           <div>
             {{ currency.iso }}

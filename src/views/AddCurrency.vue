@@ -50,20 +50,6 @@ export default {
     currencies: []
   }),
   methods: {
-    getCurrentCurrency() {
-      if (localStorage.getItem("currencies")) {
-        try {
-          this.currencies = JSON.parse(localStorage.getItem("currencies"));
-          this.currencies.find(element => {
-            if (element.id === this.currency.id) {
-              this.currency = element;
-            }
-          });
-        } catch (e) {
-          localStorage.removeItem("currencies");
-        }
-      }
-    },
     getCurrencies() {
       if (localStorage.getItem("currencies")) {
         try {
@@ -74,10 +60,13 @@ export default {
       }
     },
     addCurrency() {
-      this.currencies.push(this.currency);
-      this.currencies.map(element => {
-        if (element.id === null) {
-          element.id = _.uniqueId();
+      this.currency.id = _.uniqueId();
+      this.currencies.filter(element => {
+        if (element.id === this.currency.id) {
+          this.currency.id = _.uniqueId();
+          this.currencies.push(this.currency);
+        } else if (this.currencies.length === 0) {
+          this.currencies.push(this.currency);
         }
       });
       this.saveCurrencies();
