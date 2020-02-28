@@ -10,7 +10,12 @@
           <label for="code">
             Currency code
           </label>
-          <input id="code" @keyup="error = ''" v-model="currency.iso" maxlength="3" />
+          <input
+            id="code"
+            @keyup="error = ''"
+            v-model="currency.iso"
+            maxlength="3"
+          />
         </div>
         <span class="error" v-if="error">
           {{ error }}
