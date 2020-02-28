@@ -3,22 +3,33 @@
     <span class="title">Currency list</span>
     <hr class="title-divider" />
     <div class="d-flex flex-column" v-if="currencies.length">
-      <span v-for="currency in currencies" :key="currency.id" class="currency">
-        {{ currency.iso }}
-        <hr />
-      </span>
+      <div
+        v-for="currency in currencies"
+        :key="currency.id"
+        @mouseover="deleting = true"
+        @mouseleave="deleting = false"
+        class="currency"
+      >
+        <div>
+          {{ currency.iso }}
+        </div>
+        <div class="pointer" v-if="deleting">
+          Delete
+        </div>
+      </div>
+      <hr />
     </div>
     <div class="d-flex flex-column" v-else>
       No currencies added. Try adding some.
       <hr />
     </div>
     <div class="d-flex">
-      <a href="/currencies/add">
+      <router-link to="/currencies/add">
         <font-awesome-icon icon="plus-circle" style="color: #ff6600" />
         <span class="add-currency pointer">
           Add currency
         </span>
-      </a>
+      </router-link>
     </div>
   </div>
 </template>
@@ -29,7 +40,10 @@ export default {
     this.getCurrencies();
   },
   data: () => ({
-    currencies: [{ id: 1, iso: "EUR", symbol: "e" }]
+    currencies: [
+      // { id: 1, iso: "EUR", symbol: "e" }
+    ],
+    deleting: false
   }),
   methods: {
     getCurrencies() {}
@@ -57,7 +71,8 @@ a {
   width: 100%;
 }
 .currency {
-  text-align: start;
+  display: flex;
+  justify-content: space-between;
   font-size: 16px;
 }
 </style>
