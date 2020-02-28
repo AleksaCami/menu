@@ -10,7 +10,7 @@
           <label for="code">
             Currency code
           </label>
-          <input id="code" v-model="currency.iso" maxlength="3" required />
+          <input id="code" @keyup="error = ''" v-model="currency.iso" maxlength="3" required />
         </div>
         <span class="error" v-if="error">
           {{ error }}
@@ -51,7 +51,7 @@ export default {
       symbol: null
     },
     currencies: [],
-    error: "",
+    error: ""
   }),
   methods: {
     getCurrencies() {
@@ -64,28 +64,31 @@ export default {
       }
     },
     addCurrency() {
-      this.currency.id = _.uniqueId();
-      this.currencies.find(element => {
-        if (element.id === this.currency.id) {
-          this.currency.id = _.uniqueId();
-          this.currency = {
-            id: "",
-            iso: "",
-            symbol: ""
-          };
-        } else if (
-          element.iso === this.currency.iso ||
-          !this.currency.symbol.length
-        ) {
-          this.error = "Already exists.";
+      this.currencies.filter(element => {
+        if (element.iso === this.currency.iso) {
+          this.error = "Already exists";
         }
       });
-      this.currencies.push(this.currency);
-      this.saveCurrencies();
+      if (!this.error.length) {
+        this.currency.id = _.uniqueId();
+        this.currencies.find(element => {
+          if (element.id === this.currency.id) {
+            this.currency.id = _.uniqueId();
+          }
+        });
+        this.currencies.push(this.currency);
+        this.saveCurrencies();
+        window.location.reload();
+      }
     },
     saveCurrencies() {
       let parsed = JSON.stringify(this.currencies);
       localStorage.setItem("currencies", parsed);
+      this.currency = {
+        id: "",
+        iso: "",
+        symbol: ""
+      };
     }
   }
 };
