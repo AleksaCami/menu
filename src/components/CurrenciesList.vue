@@ -103,7 +103,11 @@ export default {
       this.searching = true;
       this.reformattedSearchString = searchParams.join(" ");
       this.currencies.filter(element => {
-        if (element.iso === this.reformattedSearchString) {
+        if (
+          element.iso === this.reformattedSearchString ||
+          element.symbol === this.reformattedSearchString ||
+          element.id === this.reformattedSearchString
+        ) {
           this.searchResults.push(element);
         }
       });
